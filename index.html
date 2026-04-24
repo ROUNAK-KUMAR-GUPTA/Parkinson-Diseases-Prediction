@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parkinson's Disease Prediction – Voice Analysis</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <a class="nav-brand" href="#" onclick="showPage('home')">
+    <div class="nav-brand-icon">🧠</div>
+    <div>
+      <div class="nav-brand-text">NeuroVoice AI</div>
+      <div class="nav-brand-sub">Parkinson's Detection System</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')"     id="nav-home"    class="active">🏠 Home</a></li>
+    <li><a href="#" onclick="showPage('eda')"      id="nav-eda"            >📊 EDA</a></li>
+    <li><a href="#" onclick="showPage('models')"   id="nav-models"         >🤖 Models</a></li>
+    <li><a href="#" onclick="showPage('predict')"  id="nav-predict"        >🔬 Predict</a></li>
+    <li><a href="#" onclick="showPage('about')"    id="nav-about"          >ℹ️ About</a></li>
+    <li><span class="nav-badge">v1.0</span></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">🎙️ AI-Powered Voice Biomarker Analysis</div>
+    <h1>Parkinson's Disease<br/>Prediction via Voice</h1>
+    <p>Advanced machine learning models trained on 22 voice biomarkers to detect
+       Parkinson's Disease with up to <strong>94.87%</strong> accuracy — powered by
+       SVM, XGBoost, Random Forest & more.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val">94.87%</div>
+        <div class="hero-stat-label">Best Accuracy</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">96.67%</div>
+        <div class="hero-stat-label">F1 Score</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">98.3%</div>
+        <div class="hero-stat-label">AUC-ROC</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">7</div>
+        <div class="hero-stat-label">Models Trained</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">22</div>
+        <div class="hero-stat-label">Voice Features</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">195</div>
+        <div class="hero-stat-label">Samples</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Quick Metrics -->
+    <div class="mt-3 grid-4 fade-in">
+      <div class="metric-card blue">
+        <div class="metric-icon">🏆</div>
+        <div class="metric-val" style="color:#6B93D6">SVM</div>
+        <div class="metric-label">Best Model</div>
+      </div>
+      <div class="metric-card green">
+        <div class="metric-icon">✅</div>
+        <div class="metric-val" style="color:#2ecc71">94.9%</div>
+        <div class="metric-label">Accuracy</div>
+      </div>
+      <div class="metric-card purple">
+        <div class="metric-icon">📈</div>
+        <div class="metric-val" style="color:#9b59b6">0.983</div>
+        <div class="metric-label">Best AUC (KNN)</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-icon">🎯</div>
+        <div class="metric-val" style="color:#DD8452">96.7%</div>
+        <div class="metric-label">F1 Score</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Overview Cards -->
+    <div class="section-header">
+      <h2>🔬 Project Overview</h2>
+      <p>Key components of the Parkinson's Voice Analysis Pipeline</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="info-card fade-in">
+        <h3>🎙️ Voice Biomarkers</h3>
+        <p>Voice recordings capture subtle tremors, pitch instability, and noise-to-harmonic ratios that are hallmark signs of Parkinson's Disease — even before clinical diagnosis.</p>
+        <ul>
+          <li>Fundamental frequency (Fo, Fhi, Flo)</li>
+          <li>Jitter: pitch variation measures</li>
+          <li>Shimmer: amplitude variation</li>
+          <li>HNR / NHR: noise ratios</li>
+          <li>Nonlinear dynamics (RPDE, DFA, PPE)</li>
+        </ul>
+      </div>
+      <div class="info-card fade-in">
+        <h3>🤖 Machine Learning Pipeline</h3>
+        <p>Seven state-of-the-art classifiers were trained, evaluated with 5-fold cross-validation, and compared across multiple performance metrics.</p>
+        <ul>
+          <li>Support Vector Machine (RBF kernel)</li>
+          <li>Random Forest (200 trees)</li>
+          <li>XGBoost (gradient boosting)</li>
+          <li>Gradient Boosting Classifier</li>
+          <li>K-Nearest Neighbors</li>
+          <li>Logistic Regression & Decision Tree</li>
+        </ul>
+      </div>
+      <div class="info-card fade-in">
+        <h3>📊 Dataset Details</h3>
+        <p>The UCI Parkinson's dataset contains biomedical voice measurements from 31 people (23 with Parkinson's). Multiple recordings per person give 195 total samples.</p>
+        <ul>
+          <li>195 voice samples total</li>
+          <li>147 Parkinson's (75.4%)</li>
+          <li>48 Healthy controls (24.6%)</li>
+          <li>22 acoustic features</li>
+          <li>Source: UCI ML Repository</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Pipeline Timeline -->
+    <div class="section-header">
+      <h2>⚙️ Analysis Pipeline</h2>
+      <p>Step-by-step workflow from raw data to prediction</p>
+    </div>
+    <div class="card fade-in">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--primary)"></div>
+          <div class="timeline-title">📥 Data Collection & Loading</div>
+          <div class="timeline-desc">UCI Parkinson's voice dataset — 195 samples, 22 acoustic features, binary target (healthy / Parkinson's)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--secondary)"></div>
+          <div class="timeline-title">🔍 Exploratory Data Analysis</div>
+          <div class="timeline-desc">Class distribution analysis, correlation matrix, feature distributions, violin/box plots, PCA projections</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--healthy)"></div>
+          <div class="timeline-title">⚙️ Preprocessing & Feature Engineering</div>
+          <div class="timeline-desc">StandardScaler normalization, ANOVA F-score feature ranking, 80/20 stratified train-test split</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--accent)"></div>
+          <div class="timeline-title">🤖 Model Training</div>
+          <div class="timeline-desc">7 classifiers trained: SVM, Random Forest, XGBoost, Gradient Boosting, Logistic Regression, KNN, Decision Tree</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--parkinsons)"></div>
+          <div class="timeline-title">📊 Evaluation & Comparison</div>
+          <div class="timeline-desc">Accuracy, Precision, Recall, F1, AUC-ROC, confusion matrices, 5-fold cross-validation, precision-recall curves</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--healthy)"></div>
+          <div class="timeline-title">🚀 Deployment</div>
+          <div class="timeline-desc">Best model (SVM RBF) saved with StandardScaler. Interactive prediction interface for real-time inference.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart: Live Model Comparison -->
+    <div class="divider"></div>
+    <div class="section-header">
+      <h2>📊 Model Performance at a Glance</h2>
+      <p>Interactive comparison of all trained models</p>
+    </div>
+    <div class="card fade-in">
+      <canvas id="homeChart" height="90"></canvas>
+    </div>
+
+  </div>
+  <div class="footer">
+    NeuroVoice AI • Parkinson's Disease Detection via Voice Analysis •
+    Dataset: UCI ML Repository • Built with Python, scikit-learn, XGBoost
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: EDA
+══════════════════════════════════════════════════════════ -->
+<div id="page-eda" class="page">
+  <div class="hero" style="padding:2.5rem 2rem 2rem">
+    <div class="hero-badge">📊 Exploratory Data Analysis</div>
+    <h1 style="font-size:2rem">Data Exploration & Insights</h1>
+    <p>Deep dive into voice feature distributions, correlations, and class separability</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Dataset Stats -->
+    <div class="grid-4 mt-3">
+      <div class="metric-card blue"><div class="metric-icon">📦</div><div class="metric-val" style="color:#6B93D6">195</div><div class="metric-label">Total Samples</div></div>
+      <div class="metric-card red"><div class="metric-icon">🔴</div><div class="metric-val" style="color:#e74c3c">147</div><div class="metric-label">Parkinson's</div></div>
+      <div class="metric-card green"><div class="metric-icon">🟢</div><div class="metric-val" style="color:#2ecc71">48</div><div class="metric-label">Healthy</div></div>
+      <div class="metric-card purple"><div class="metric-icon">🔢</div><div class="metric-val" style="color:#9b59b6">22</div><div class="metric-label">Features</div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('eda','dist')">Distribution</button>
+      <button class="tab-btn" onclick="switchTab('eda','corr')">Correlation</button>
+      <button class="tab-btn" onclick="switchTab('eda','violin')">Violin Plots</button>
+      <button class="tab-btn" onclick="switchTab('eda','pca')">PCA & Scatter</button>
+    </div>
+
+    <!-- Tab: Distribution -->
+    <div id="eda-dist" class="tab-content active">
+      <div class="grid-2">
+        <div class="viz-panel">
+          <div class="viz-header"><h3>📊 Class Distribution</h3><span class="viz-tag">Balance</span></div>
+          <div class="viz-body"><img src="visualizations/01_class_distribution.png" alt="Class Distribution"/></div>
+        </div>
+        <div class="viz-panel">
+          <div class="viz-header"><h3>📈 Feature Distributions</h3><span class="viz-tag">8 Features</span></div>
+          <div class="viz-body"><img src="visualizations/03_feature_distributions.png" alt="Feature Distributions"/></div>
+        </div>
+      </div>
+      <div class="mt-3">
+        <div class="viz-panel">
+          <div class="viz-header"><h3>📦 Box Plots by Feature Group</h3><span class="viz-tag">Jitter / Shimmer / Nonlinear</span></div>
+          <div class="viz-body"><img src="visualizations/04_boxplots_by_group.png" alt="Box Plots"/></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Correlation -->
+    <div id="eda-corr" class="tab-content">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>🔗 Full Feature Correlation Matrix</h3><span class="viz-tag">22 × 22 Heatmap</span></div>
+        <div class="viz-body"><img src="visualizations/02_correlation_heatmap.png" alt="Correlation Heatmap"/></div>
+      </div>
+      <div class="mt-3 grid-2">
+        <div class="card">
+          <div class="card-title"><span class="icon">📌</span>Top Positive Correlations</div>
+          <div id="pos-corr-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="icon">📌</span>Top Negative Correlations with Status</div>
+          <div id="neg-corr-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Violin -->
+    <div id="eda-violin" class="tab-content">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>🎻 Violin Plots – Key Voice Features</h3><span class="viz-tag">Distribution Shape</span></div>
+        <div class="viz-body"><img src="visualizations/05_violin_plots.png" alt="Violin Plots"/></div>
+      </div>
+    </div>
+
+    <!-- Tab: PCA -->
+    <div id="eda-pca" class="tab-content">
+      <div class="grid-2">
+        <div class="viz-panel">
+          <div class="viz-header"><h3>🌐 PCA 2D Projection</h3><span class="viz-tag">Dimensionality Reduction</span></div>
+          <div class="viz-body"><img src="visualizations/07_pca_projection.png" alt="PCA"/></div>
+        </div>
+        <div class="viz-panel">
+          <div class="viz-header"><h3>🔵 Voice Biomarker Scatter</h3><span class="viz-tag">PPE/HNR · spread1/RPDE</span></div>
+          <div class="viz-body"><img src="visualizations/15_scatter_biomarkers.png" alt="Scatter"/></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Importance -->
+    <div class="divider"></div>
+    <div class="section-header"><h2>⭐ ANOVA Feature Importance</h2><p>Top discriminative voice features ranked by F-score</p></div>
+    <div class="card fade-in">
+      <div class="viz-body"><img src="visualizations/06_feature_importance.png" alt="Feature Importance"/></div>
+    </div>
+
+    <!-- Feature Reference Table -->
+    <div class="divider"></div>
+    <div class="section-header"><h2>📖 Feature Reference Guide</h2><p>Description of all 22 voice biomarkers</p></div>
+    <div class="card fade-in">
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Feature</th><th>Group</th><th>Description</th></tr></thead>
+          <tbody id="feature-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: MODELS
+══════════════════════════════════════════════════════════ -->
+<div id="page-models" class="page">
+  <div class="hero" style="padding:2.5rem 2rem 2rem">
+    <div class="hero-badge">🤖 Model Evaluation</div>
+    <h1 style="font-size:2rem">ML Model Comparison & Analysis</h1>
+    <p>Comprehensive evaluation of 7 machine learning classifiers on voice biomarker data</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Summary Cards -->
+    <div class="grid-4 mt-3">
+      <div class="metric-card blue"><div class="metric-icon">🏆</div><div class="metric-val" style="color:#6B93D6">SVM</div><div class="metric-label">Best F1 Model</div></div>
+      <div class="metric-card purple"><div class="metric-icon">📈</div><div class="metric-val" style="color:#9b59b6">KNN</div><div class="metric-label">Best AUC Model</div></div>
+      <div class="metric-card orange"><div class="metric-icon">🔄</div><div class="metric-val" style="color:#DD8452">KNN</div><div class="metric-label">Best CV Model</div></div>
+      <div class="metric-card red"><div class="metric-icon">⚠️</div><div class="metric-val" style="color:#e74c3c">DT</div><div class="metric-label">Weakest Model</div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Performance Table -->
+    <div class="section-header"><h2>📋 Performance Metrics Table</h2><p>All models ranked by F1 score</p></div>
+    <div class="card fade-in">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Model</th><th>Accuracy</th><th>Precision</th>
+              <th>Recall</th><th>F1 Score</th><th>AUC-ROC</th><th>CV Mean</th><th>CV Std</th>
+            </tr>
+          </thead>
+          <tbody id="model-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Charts Row -->
+    <div class="section-header"><h2>📊 Visual Comparisons</h2><p>ROC curves, confusion matrices, cross-validation distributions</p></div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('models','comparison')">Bar Comparison</button>
+      <button class="tab-btn" onclick="switchTab('models','roc')">ROC Curves</button>
+      <button class="tab-btn" onclick="switchTab('models','cm')">Confusion Matrices</button>
+      <button class="tab-btn" onclick="switchTab('models','cv')">Cross-Validation</button>
+      <button class="tab-btn" onclick="switchTab('models','pr')">Precision-Recall</button>
+      <button class="tab-btn" onclick="switchTab('models','radar')">Radar Chart</button>
+    </div>
+
+    <div id="models-comparison" class="tab-content active">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>📊 Model Comparison – All Metrics</h3><span class="viz-tag">7 Models × 5 Metrics</span></div>
+        <div class="viz-body"><img src="visualizations/08_model_comparison.png" alt="Model Comparison"/></div>
+      </div>
+      <!-- Live Chart -->
+      <div class="mt-3 card">
+        <div class="card-title">🎯 Interactive Accuracy Chart</div>
+        <canvas id="accuracyChart" height="80"></canvas>
+      </div>
+    </div>
+
+    <div id="models-roc" class="tab-content">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>📈 ROC Curves – All Models</h3><span class="viz-tag">AUC Comparison</span></div>
+        <div class="viz-body"><img src="visualizations/09_roc_curves.png" alt="ROC Curves"/></div>
+      </div>
+    </div>
+
+    <div id="models-cm" class="tab-content">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>🔲 Confusion Matrices</h3><span class="viz-tag">All 7 Models</span></div>
+        <div class="viz-body"><img src="visualizations/10_confusion_matrices.png" alt="Confusion Matrices"/></div>
+      </div>
+    </div>
+
+    <div id="models-cv" class="tab-content">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>🔄 5-Fold Cross-Validation</h3><span class="viz-tag">Distribution</span></div>
+        <div class="viz-body"><img src="visualizations/11_cross_validation.png" alt="Cross Validation"/></div>
+      </div>
+    </div>
+
+    <div id="models-pr" class="tab-content">
+      <div class="viz-panel">
+        <div class="viz-header"><h3>⚖️ Precision-Recall Curves</h3><span class="viz-tag">Imbalanced Classes</span></div>
+        <div class="viz-body"><img src="visualizations/13_precision_recall_curves.png" alt="Precision Recall"/></div>
+      </div>
+    </div>
+
+    <div id="models-radar" class="tab-content">
+      <div class="grid-2">
+        <div class="viz-panel">
+          <div class="viz-header"><h3>🕸️ Radar Chart – Top 3 Models</h3><span class="viz-tag">Multi-metric</span></div>
+          <div class="viz-body"><img src="visualizations/14_radar_chart.png" alt="Radar Chart"/></div>
+        </div>
+        <div class="viz-panel">
+          <div class="viz-header"><h3>⭐ Best Model Feature Importances</h3><span class="viz-tag">SVM / Top Features</span></div>
+          <div class="viz-body"><img src="visualizations/06_feature_importance.png" alt="Feature Importance"/></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model Cards -->
+    <div class="divider"></div>
+    <div class="section-header"><h2>🔍 Model Profiles</h2><p>Detailed description of each classifier</p></div>
+    <div class="grid-auto" id="model-profile-cards"></div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: PREDICT
+══════════════════════════════════════════════════════════ -->
+<div id="page-predict" class="page">
+  <div class="hero" style="padding:2.5rem 2rem 2rem">
+    <div class="hero-badge">🔬 Live Prediction Engine</div>
+    <h1 style="font-size:2rem">Real-Time Parkinson's Prediction</h1>
+    <p>Enter voice biomarker values to get an instant prediction using the best-performing SVM model</p>
+  </div>
+
+  <div class="container">
+
+    <div class="alert alert-warn mt-3">
+      ⚠️ <span><strong>Medical Disclaimer:</strong> This tool is for research and educational purposes only. It does not constitute medical advice. Always consult a qualified healthcare professional for diagnosis.</span>
+    </div>
+    <div class="alert alert-info">
+      ℹ️ <span>Use the <strong>Load Sample</strong> buttons to auto-fill values from real patients in the dataset, or enter your own values manually.</span>
+    </div>
+
+    <div class="predict-layout">
+
+      <!-- Form -->
+      <div class="card fade-in" style="height:fit-content">
+        <div class="card-title"><span class="icon">⚙️</span>Voice Feature Input</div>
+        <div class="card-subtitle">22 acoustic biomarkers derived from sustained phonation recordings</div>
+
+        <div class="sample-btns">
+          <span style="font-size:0.82rem;color:var(--text-muted);align-self:center">Quick Load:</span>
+          <button class="sample-btn healthy"    onclick="loadSample('healthy1')">🟢 Healthy Sample 1</button>
+          <button class="sample-btn healthy"    onclick="loadSample('healthy2')">🟢 Healthy Sample 2</button>
+          <button class="sample-btn parkinsons" onclick="loadSample('park1')">🔴 Parkinson's Sample 1</button>
+          <button class="sample-btn parkinsons" onclick="loadSample('park2')">🔴 Parkinson's Sample 2</button>
+          <button class="sample-btn" onclick="clearForm()" style="border-color:var(--border);color:var(--text-muted)">✖ Clear</button>
+        </div>
+
+        <form id="predict-form">
+
+          <div class="form-section-title">🎵 Fundamental Frequency</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>MDVP:Fo(Hz)</label>
+              <input type="number" step="any" id="f_Fo" placeholder="e.g. 119.99" required/>
+              <span class="input-hint">Average vocal fundamental frequency</span>
+            </div>
+            <div class="form-group">
+              <label>MDVP:Fhi(Hz)</label>
+              <input type="number" step="any" id="f_Fhi" placeholder="e.g. 157.30" required/>
+              <span class="input-hint">Maximum vocal frequency</span>
+            </div>
+            <div class="form-group">
+              <label>MDVP:Flo(Hz)</label>
+              <input type="number" step="any" id="f_Flo" placeholder="e.g. 74.99" required/>
+              <span class="input-hint">Minimum vocal frequency</span>
+            </div>
+          </div>
+
+          <div class="form-section-title">📳 Jitter Measures</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>MDVP:Jitter(%)</label>
+              <input type="number" step="any" id="f_Jitter_pct" placeholder="e.g. 0.00784"/>
+              <span class="input-hint">% variation in period</span>
+            </div>
+            <div class="form-group">
+              <label>MDVP:Jitter(Abs)</label>
+              <input type="number" step="any" id="f_Jitter_Abs" placeholder="e.g. 0.00007"/>
+              <span class="input-hint">Absolute jitter value</span>
+            </div>
+            <div class="form-group">
+              <label>MDVP:RAP</label>
+              <input type="number" step="any" id="f_RAP" placeholder="e.g. 0.00370"/>
+              <span class="input-hint">Relative amplitude perturbation</span>
+            </div>
+            <div class="form-group">
+              <label>MDVP:PPQ</label>
+              <input type="number" step="any" id="f_PPQ" placeholder="e.g. 0.00554"/>
+              <span class="input-hint">5-pt period perturbation quotient</span>
+            </div>
+            <div class="form-group">
+              <label>Jitter:DDP</label>
+              <input type="number" step="any" id="f_DDP" placeholder="e.g. 0.01109"/>
+              <span class="input-hint">Avg absolute diff of jitter cycles</span>
+            </div>
+          </div>
+
+          <div class="form-section-title">🌊 Shimmer Measures</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>MDVP:Shimmer</label>
+              <input type="number" step="any" id="f_Shimmer" placeholder="e.g. 0.04374"/>
+            </div>
+            <div class="form-group">
+              <label>MDVP:Shimmer(dB)</label>
+              <input type="number" step="any" id="f_Shimmer_dB" placeholder="e.g. 0.426"/>
+            </div>
+            <div class="form-group">
+              <label>Shimmer:APQ3</label>
+              <input type="number" step="any" id="f_APQ3" placeholder="e.g. 0.02182"/>
+            </div>
+            <div class="form-group">
+              <label>Shimmer:APQ5</label>
+              <input type="number" step="any" id="f_APQ5" placeholder="e.g. 0.03130"/>
+            </div>
+            <div class="form-group">
+              <label>MDVP:APQ</label>
+              <input type="number" step="any" id="f_APQ" placeholder="e.g. 0.02971"/>
+            </div>
+            <div class="form-group">
+              <label>Shimmer:DDA</label>
+              <input type="number" step="any" id="f_DDA" placeholder="e.g. 0.06545"/>
+            </div>
+          </div>
+
+          <div class="form-section-title">🔊 Noise Ratios</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>NHR</label>
+              <input type="number" step="any" id="f_NHR" placeholder="e.g. 0.02211"/>
+              <span class="input-hint">Noise-to-harmonics ratio</span>
+            </div>
+            <div class="form-group">
+              <label>HNR</label>
+              <input type="number" step="any" id="f_HNR" placeholder="e.g. 21.033"/>
+              <span class="input-hint">Harmonics-to-noise ratio (dB)</span>
+            </div>
+          </div>
+
+          <div class="form-section-title">📐 Nonlinear Dynamics</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>RPDE</label>
+              <input type="number" step="any" id="f_RPDE" placeholder="e.g. 0.4148"/>
+              <span class="input-hint">Recurrence period density entropy</span>
+            </div>
+            <div class="form-group">
+              <label>DFA</label>
+              <input type="number" step="any" id="f_DFA" placeholder="e.g. 0.8153"/>
+              <span class="input-hint">Detrended fluctuation analysis</span>
+            </div>
+            <div class="form-group">
+              <label>spread1</label>
+              <input type="number" step="any" id="f_spread1" placeholder="e.g. -4.813"/>
+              <span class="input-hint">Nonlinear measure of freq variation</span>
+            </div>
+            <div class="form-group">
+              <label>spread2</label>
+              <input type="number" step="any" id="f_spread2" placeholder="e.g. 0.2665"/>
+            </div>
+            <div class="form-group">
+              <label>D2</label>
+              <input type="number" step="any" id="f_D2" placeholder="e.g. 2.301"/>
+              <span class="input-hint">Correlation dimension</span>
+            </div>
+            <div class="form-group">
+              <label>PPE</label>
+              <input type="number" step="any" id="f_PPE" placeholder="e.g. 0.2847"/>
+              <span class="input-hint">Pitch period entropy</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1rem;margin-top:1.5rem">
+            <button type="button" class="btn btn-primary" onclick="runPrediction()" style="flex:1">
+              🔬 Run Prediction
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="clearForm()">
+              ✖ Clear
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="result-panel fade-in">
+        <div class="result-header">🎯 Prediction Result</div>
+        <div class="result-body">
+
+          <div class="result-indicator waiting" id="result-indicator">
+            <div class="result-emoji">🎙️</div>
+            <div class="result-label waiting">Awaiting Input</div>
+            <div class="result-sub">Fill in voice features and click Predict</div>
+          </div>
+
+          <div class="confidence-bar">
+            <div class="conf-label">
+              <span>Parkinson's Probability</span>
+              <span id="conf-pct">—</span>
+            </div>
+            <div class="conf-track">
+              <div class="conf-fill" id="conf-fill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="confidence-bar mt-1">
+            <div class="conf-label">
+              <span>Healthy Probability</span>
+              <span id="conf-healthy-pct">—</span>
+            </div>
+            <div class="conf-track">
+              <div class="conf-fill safe" id="conf-healthy-fill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="divider" style="margin:1rem 0"></div>
+
+          <div id="result-details" style="display:none">
+            <div class="flex justify-between text-sm mt-2" style="margin-bottom:6px">
+              <span class="text-muted">Model Used</span>
+              <span class="font-mono" style="color:var(--primary-light)">SVM (RBF)</span>
+            </div>
+            <div class="flex justify-between text-sm" style="margin-bottom:6px">
+              <span class="text-muted">Kernel</span>
+              <span class="font-mono">RBF, C=10, γ=0.01</span>
+            </div>
+            <div class="flex justify-between text-sm" style="margin-bottom:6px">
+              <span class="text-muted">Train Accuracy</span>
+              <span class="font-mono">94.87%</span>
+            </div>
+            <div class="flex justify-between text-sm" style="margin-bottom:6px">
+              <span class="text-muted">AUC-ROC</span>
+              <span class="font-mono">0.9621</span>
+            </div>
+            <div class="divider" style="margin:0.75rem 0"></div>
+            <div class="card-title" style="font-size:0.82rem;margin-bottom:8px">🔑 Key Risk Features</div>
+            <div class="feature-pills" id="risk-pills"></div>
+          </div>
+
+          <div class="divider" style="margin:1rem 0"></div>
+          <div class="card-title" style="font-size:0.82rem;margin-bottom:8px">📊 Model Confidence</div>
+          <canvas id="predChart" height="160"></canvas>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Info Boxes -->
+    <div class="divider"></div>
+    <div class="grid-3">
+      <div class="info-card">
+        <h3>🎯 How It Works</h3>
+        <p>The prediction uses a Support Vector Machine with RBF kernel, trained on standardized voice features. Input values are scaled using the same StandardScaler fitted on training data, then classified by the decision boundary.</p>
+      </div>
+      <div class="info-card">
+        <h3>📏 Normal Value Ranges</h3>
+        <ul>
+          <li>MDVP:Fo: 100–260 Hz (typical speech)</li>
+          <li>Jitter(%): <1% (normal), >1% (abnormal)</li>
+          <li>Shimmer: <3.81 dB (normal threshold)</li>
+          <li>HNR: >20 dB (healthy voice quality)</li>
+          <li>PPE: lower values = more regular pitch</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>⚠️ Interpretation Guide</h3>
+        <ul>
+          <li>Probability >70% → High risk, consult doctor</li>
+          <li>Probability 50–70% → Borderline, monitor</li>
+          <li>Probability <30% → Low risk, likely healthy</li>
+          <li>Single test not diagnostic; repeat recommended</li>
+          <li>Context matters: age, medications affect voice</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════════════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="hero" style="padding:2.5rem 2rem 2rem">
+    <div class="hero-badge">ℹ️ About This Project</div>
+    <h1 style="font-size:2rem">Research Background & Methods</h1>
+    <p>Understanding the science behind voice-based Parkinson's detection</p>
+  </div>
+
+  <div class="container">
+    <div class="grid-2 mt-3">
+      <div class="info-card fade-in">
+        <h3>🧠 About Parkinson's Disease</h3>
+        <p>Parkinson's Disease (PD) is a progressive neurodegenerative disorder affecting over 10 million people worldwide. It primarily affects dopamine-producing neurons in a specific area of the brain called substantia nigra.</p>
+        <p style="margin-top:0.75rem">Common symptoms include tremors, rigidity, bradykinesia (slow movement), and postural instability. <strong>Voice changes are among the earliest symptoms</strong>, appearing in ~90% of PD patients — often before motor symptoms.</p>
+      </div>
+      <div class="info-card fade-in">
+        <h3>🎙️ Why Voice Analysis?</h3>
+        <p>Voice recording is a non-invasive, low-cost, and highly accessible biomarker. Parkinson's affects the laryngeal muscles, causing characteristic voice disorders called <em>dysphonia</em>.</p>
+        <p style="margin-top:0.75rem">Key voice changes in PD: reduced loudness, breathy/hoarse quality, pitch instability (jitter), amplitude instability (shimmer), and increased noise ratio (HNR↓, NHR↑).</p>
+      </div>
+      <div class="info-card fade-in">
+        <h3>📊 Dataset: UCI Parkinson's</h3>
+        <p>Composed by Max Little (University of Oxford) in collaboration with the National Centre for Voice and Speech, Denver, Colorado. The dataset contains biomedical voice measurements from 31 people (23 with PD) using a microphone.</p>
+        <p style="margin-top:0.75rem"><strong>Citation:</strong> Little MA, et al. (2007). "Suitability of dysphonia measurements for telemonitoring of Parkinson's disease." IEEE Trans Biomed Eng.</p>
+      </div>
+      <div class="info-card fade-in">
+        <h3>🔬 Machine Learning Approach</h3>
+        <p>We employed a supervised binary classification approach with extensive preprocessing (StandardScaler), feature analysis (ANOVA), and rigorous evaluation using stratified 5-fold cross-validation.</p>
+        <p style="margin-top:0.75rem">The best model (SVM with RBF kernel) achieved 94.87% accuracy and 96.67% F1-score, indicating excellent sensitivity for detecting Parkinson's cases.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-header"><h2>🛠️ Technology Stack</h2></div>
+    <div class="grid-4">
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">🐍</div>
+        <div style="font-weight:700">Python 3.11</div>
+        <div class="text-muted text-sm">Core language</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">🤖</div>
+        <div style="font-weight:700">scikit-learn</div>
+        <div class="text-muted text-sm">ML framework</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">⚡</div>
+        <div style="font-weight:700">XGBoost</div>
+        <div class="text-muted text-sm">Gradient boosting</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">📊</div>
+        <div style="font-weight:700">Matplotlib / Seaborn</div>
+        <div class="text-muted text-sm">Visualization</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">🐼</div>
+        <div style="font-weight:700">Pandas / NumPy</div>
+        <div class="text-muted text-sm">Data processing</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">💾</div>
+        <div style="font-weight:700">joblib</div>
+        <div class="text-muted text-sm">Model persistence</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">🌐</div>
+        <div style="font-weight:700">Chart.js</div>
+        <div class="text-muted text-sm">Interactive charts</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">📱</div>
+        <div style="font-weight:700">HTML5 / CSS3</div>
+        <div class="text-muted text-sm">Dashboard UI</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-header"><h2>📚 References</h2></div>
+    <div class="card fade-in">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Little MA, et al. (2007)</div>
+          <div class="timeline-desc">Suitability of dysphonia measurements for telemonitoring of Parkinson's disease. IEEE Transactions on Biomedical Engineering, 56(4):1015–1022.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">UCI ML Repository</div>
+          <div class="timeline-desc">Dua, D. and Graff, C. (2019). UCI Machine Learning Repository. Irvine, CA: University of California, School of Information and Computer Science.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Cornu et al. (1997)</div>
+          <div class="timeline-desc">Acoustic measures of voice in Parkinson's disease. Journal of Voice, describing the clinical significance of jitter, shimmer, and HNR measures.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Vapnik, V. (1995)</div>
+          <div class="timeline-desc">The Nature of Statistical Learning Theory. Springer. Foundation of Support Vector Machine methodology used in this project.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">NeuroVoice AI • Research Project • UCI Parkinson's Dataset • Not for clinical use</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════════ -->
+<script src="static/js/app.js"></script>
+</body>
+</html>
